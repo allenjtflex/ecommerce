@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  {% for product in object_list %}
+    <div>
+        <span>{{ forloop.counter }}.<span>  <span>{{ product }}<span><br>
+    </div>
+  {% endfor %}
+
+{% endblock content %}
