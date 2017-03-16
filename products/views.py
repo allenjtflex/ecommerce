@@ -5,9 +5,15 @@ from django.views.generic.list import ListView
 from .models import Product
 
 
-class ProductDetail( DetailView ):
-    model = get_object_or_404( Product )
+class ProductList(ListView):
+    model = Product
+    #queryset = Product.objects.all()
+
+    def get_context_data(self, *args, **kwargs):
+        context = super( ProductList, self ).get_context_data(*args, **kwargs)
+        #print( context )
+        return context
 
 
-class ProductList( ListView ):
+class ProductDetail(DetailView):
     model = Product

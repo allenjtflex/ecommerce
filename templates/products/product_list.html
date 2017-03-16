@@ -2,10 +2,13 @@
 
 {% block content %}
 
-  {% for product in object_list %}
-    <div>
-        <span>{{ forloop.counter }}.<span>  <span>{{ product }}<span><br>
-    </div>
+<table class="table">
+  {% for product in product_list %}
+    <tr>
+        <td>{{ forloop.counter }}.</td><td><a href="{{product.get_absolute_url }}">{{ product }}</a></td>
+    </tr>
   {% endfor %}
+</table>
 
+{{ user }}
 {% endblock content %}
