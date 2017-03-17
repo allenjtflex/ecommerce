@@ -2,10 +2,30 @@
 
 
 {% block content %}
-      {{ object.title }}<p>
+<div class="row">
+    <div class="col-sm-8">
+      <h2>{{ object.title }}</h2>
+      <p class="lead">
+      {{ object.discription }}
+      </p>
+    </div>
+    <div class="col-sm-4">
+      <h2>{{ object.price }}</h2>
+      {% if object.variation_set.all.count > 0 %}
       <select class="form-control">
       {% for var_obj in object.variation_set.all %}
         <option value="{{ var_obj.id }}">{{ var_obj.title }}</option>
       {% endfor %}
       </select>
+
+        <a href="#">Add to Cart</a>
+      {% else %}
+        No Variation
+      {% endif %}
+      <br>
+      <hr>
+      <p class="lead">Relate Product </p>
+
+    </div>
+</div>
 {% endblock content %}
