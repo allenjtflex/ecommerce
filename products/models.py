@@ -1,5 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.db.models.signals import post_save
+
 
 
 # Create your models here.
@@ -19,7 +21,7 @@ class ProductManager(models.Manager):
 class Product(models.Model):
     title = models.CharField(max_length=60, null=False, blank=False )
     discription = models.TextField(max_length=4000, null=True, blank=True)
-    #price    = models.DecimalField(decimal_places=2,max_digits=20)
+    price    = models.DecimalField(decimal_places=2,max_digits=20, default=99.99)
     active = models.BooleanField(default=True)
 
     objects = ProductManager()
@@ -50,3 +52,21 @@ class Variation(models.Model):
 
     def get_absolute_url(self):
         return self.product.get_absolute_url()
+
+
+
+#此function是要在product的資料儲存後，自動新增一筆預設的價格檔
+#如要的效果是資料儲存前就自動新增的話，可以使用pre_seve
+def product_saved_recevier(sender, instance, created, *args, **kwargs):
+
+    product = instance
+    variations = product.variation_set.all()
+    if variations.count() == 0:
+        new_vari = Variation()
+        new_vari.product = product
+        new_vari.title = "Default"
+        new_vari.price = product.price
+        new_vari.save()
+
+
+post_save.connect(product_saved_recevier, sender=Product)
