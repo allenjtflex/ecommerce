@@ -6,9 +6,19 @@
     <div class="col-sm-8">
       <h2>{{ object.title }}</h2>
       <p class="lead">
-      {{ object.discription }}
+          {{ object.discription }}
       </p>
+      {% if object.productimage_set.count > 0 %}
+          <div>
+          {% for img in object.productimage_set.all %}
+            <img class='img-responsive' src='{{ img.image.url }}'/>
+
+          {% endfor %}
+
+          </div>
+      {% endif %}
     </div>
+
     <div class="col-sm-4">
       <h2>{{ object.price }}</h2>
       {% if object.variation_set.all.count > 0 %}
