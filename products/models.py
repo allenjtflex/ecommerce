@@ -1,3 +1,4 @@
+
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models.signals import post_save
@@ -40,6 +41,8 @@ class Variation(models.Model):
     discription = models.TextField(null=True, blank=True)
     price    = models.DecimalField(decimal_places=2,max_digits=20)
     sale_price    = models.DecimalField(decimal_places=2,max_digits=20, null=True, blank=True)
+    inventory    = models.DecimalField(decimal_places=2,max_digits=20, default=1.00)
+
     active = models.BooleanField(default=True)
 
     def __str__(self):
